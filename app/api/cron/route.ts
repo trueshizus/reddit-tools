@@ -9,9 +9,11 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  await client
-    .db("cron")
-    .collection("tasks")
-    .insertOne({ timestampt: new Date() });
-  return Response.json({ success: true });
+  const database = client.db("cron");
+  const collection = database.collection("tasks");
+  const doc = { timestamp: new Date().toISOString() };
+  const { insertedId } = await collection.insertOne(doc);
+  const createdDoc = await collection.findOne({ _id: insertedId });
+
+  return Response.json(createdDoc);
 }
