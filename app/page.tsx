@@ -9,6 +9,7 @@ export default async function Home() {
     .db("cron")
     .collection<Task>("tasks")
     .find({})
+    .sort({ timestamp: -1 })
     .limit(1)
     .toArray();
 
