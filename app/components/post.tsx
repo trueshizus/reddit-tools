@@ -23,12 +23,13 @@ export default function Post({ post }: Props) {
     <label
       key={post.data.id}
       htmlFor={post.data.id}
-      className="block w-full max-w-lg px-10 py-8 bg-white rounded-lg shadow-xl has-[:checked]:bg-indigo-50 mt-9"
+      className="block w-full max-w-lg  bg-white shadow-xl has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-500 has-[:checked]:border-4"
     >
       <div className="flex">
         <input
           type="radio"
           name="listing-new"
+          className="appearance-none"
           value={post.data.id}
           onKeyDown={handleKeyDown}
           id={post.data.id}

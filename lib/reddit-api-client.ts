@@ -59,6 +59,58 @@ class RedditApiClient {
     };
   }
 
+  private async getSubredditListing(
+    subredditName: string,
+    listingType: string,
+    after?: string
+  ) {
+    await this.ensureAccessToken();
+    try {
+      const params = new URLSearchParams();
+      if (after) {
+        params.append("after", after);
+      }
+      const response = await this.axiosInstance.get(
+        `/r/${subredditName}/${listingType}`,
+        {
+          headers: this.getAuthHeaders(),
+          params,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        `Error fetching ${listingType} listing for subreddit ${subredditName}:`,
+        error
+      );
+      throw error;
+    }
+  }
+
+  private async getSubredditModqueue(subredditName: string, after?: string) {
+    await this.ensureAccessToken();
+    try {
+      const params = new URLSearchParams();
+      if (after) {
+        params.append("after", after);
+      }
+      const response = await this.axiosInstance.get(
+        `/r/${subredditName}/about/modqueue`,
+        {
+          headers: this.getAuthHeaders(),
+          params,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        `Error fetching modqueue for subreddit ${subredditName}:`,
+        error
+      );
+      throw error;
+    }
+  }
+
   async me() {
     await this.ensureAccessToken();
     try {
@@ -68,35 +120,6 @@ class RedditApiClient {
       return response.data;
     } catch (error) {
       console.error("Error fetching user data:", error);
-      throw error;
-    }
-  }
-
-  subreddit(subredditName: string) {
-    return {
-      listing: (listingType: string) =>
-        this.getSubredditListing(subredditName, listingType),
-    };
-  }
-
-  private async getSubredditListing(
-    subredditName: string,
-    listingType: string
-  ) {
-    await this.ensureAccessToken();
-    try {
-      const response = await this.axiosInstance.get(
-        `/r/${subredditName}/${listingType}`,
-        {
-          headers: this.getAuthHeaders(),
-        }
-      );
-      return response.data;
-    } catch (error) {
-      console.error(
-        `Error fetching ${listingType} listing for subreddit ${subredditName}:`,
-        error
-      );
       throw error;
     }
   }
@@ -139,6 +162,15 @@ class RedditApiClient {
       console.error(`Error removing ${thingName}:`, error);
       throw error;
     }
+  }
+
+  subreddit(subredditName: string) {
+    return {
+      listing: (listingType: string, after?: string) =>
+        this.getSubredditListing(subredditName, listingType, after),
+      modqueue: (after?: string) =>
+        this.getSubredditModqueue(subredditName, after),
+    };
   }
 }
 
