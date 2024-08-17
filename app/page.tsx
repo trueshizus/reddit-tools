@@ -2,20 +2,12 @@ import client from "@/lib/mongodb";
 import redditApiClient from "@/lib/reddit-api-client";
 import Post from "./components/post";
 
-type Cron = {
+type Job = {
+  after: string;
   timestamp: string;
 };
 
 export default async function Home() {
-  const cron = await client
-    .db("reddit-tools")
-    .collection<Cron>("jobs")
-    .find({})
-    .sort({ timestamp: -1 })
-    .limit(1)
-    .toArray();
-
-  console.log(cron);
   const listing = await client
     .db("reddit-tools")
     .collection("listings")
