@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
   };
 
   const listings = response.data.children.map((child: any) => ({
-    ...child,
+    ...child.data,
     kind: child.kind,
     _id: child.data.name,
   }));

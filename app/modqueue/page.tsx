@@ -1,4 +1,7 @@
 import client from "@/lib/mongodb";
+import Queue from "../components/Queue";
+import PostSummary from "../components/PostSummary";
+import Comment from "../components/Comment";
 
 export default async function Page() {
   const modqueue = client.db("reddit-tools").collection("modqueue");
@@ -10,23 +13,8 @@ export default async function Page() {
     <div>
       <h1>ModQueue</h1>
       <main className="grid grid-cols-2">
-        <section>
-          <h2>Posts</h2>
-          <ul>
-            {posts.map((post) => (
-              <li key={post._id.toString()}>{post.title}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section>
-          <h2>Comments</h2>
-          <ul>
-            {comments.map((comment) => (
-              <li key={comment._id.toString()}>{comment.body}</li>
-            ))}
-          </ul>
-        </section>
+        <Queue name="posts" items={posts} component={PostSummary} />
+        <Queue name="comments" items={comments} component={Comment} />
       </main>
     </div>
   );

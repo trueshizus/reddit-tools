@@ -1,14 +1,11 @@
 type Props = {
   _id: string;
-  data: {
-    title: string;
-    link_flair_text: string;
-    author: string;
-  };
+  title: string;
+  link_flair_text: string;
+  author: string;
 };
 
-export default function PostSummary({ data }: Props) {
-  const { title, link_flair_text, author } = data;
+export default function PostSummary({ title, link_flair_text, author }: Props) {
   return (
     <article>
       <h2>{title}</h2>
