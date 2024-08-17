@@ -9,14 +9,12 @@ export default async function Page() {
   return (
     <div>
       <h1>ModQueue</h1>
-      <main className="flex">
+      <main className="grid grid-cols-2">
         <section>
           <h2>Posts</h2>
           <ul>
             {posts.map((post) => (
-              <li key={post._id}>
-                <a href={`https://reddit.com${post.permalink}`}>{post.title}</a>
-              </li>
+              <li key={post._id.toString()}>{post.title}</li>
             ))}
           </ul>
         </section>
@@ -25,11 +23,7 @@ export default async function Page() {
           <h2>Comments</h2>
           <ul>
             {comments.map((comment) => (
-              <li key={comment._id}>
-                <a href={`https://reddit.com${comment.permalink}`}>
-                  {comment.body}
-                </a>
-              </li>
+              <li key={comment._id.toString()}>{comment.body}</li>
             ))}
           </ul>
         </section>

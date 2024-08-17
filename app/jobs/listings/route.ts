@@ -41,6 +41,7 @@ export async function GET(request: NextRequest) {
 
   const listings = response.data.children.map((child: any) => ({
     ...child,
+    kind: child.kind,
     _id: child.data.name,
   }));
 

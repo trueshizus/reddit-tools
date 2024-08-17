@@ -24,11 +24,10 @@ export async function GET(request: NextRequest) {
     after = modqueueResponse.data.after;
 
     const moderationItems = modqueueResponse.data.children.map(
-      ({ kind, data }: any) => ({
-        ...data,
-        kind,
-        _timestamp: new Date().toISOString(),
-        _id: data.name,
+      (child: any) => ({
+        ...child.data,
+        kind: child.kind,
+        _id: child.data.name,
       })
     );
 
