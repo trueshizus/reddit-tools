@@ -1,6 +1,6 @@
 import client from "@/lib/mongodb";
-import redditApiClient from "@/lib/reddit-api-client";
-import Post from "./components/post";
+import PostSummary from "./components/PostSummary";
+import Queue from "./components/Queue";
 
 type Job = {
   after: string;
@@ -15,15 +15,11 @@ export default async function Home() {
     .toArray();
 
   return (
-    <main className="bg-slate-500">
-      <div className="flex">
-        <aside className="flex flex-col gap-2 bg-slate-600 px-6">
-          {listing.map((post: any) => (
-            <Post post={post} key={post.data.id} />
-          ))}
-        </aside>
-        <section>content</section>
-      </div>
+    <main className="bg-slate-500 grid grid-cols-3">
+      <aside className="flex flex-col gap-4 bg-slate-600 px-6 pt-4">
+        <Queue name="new" items={listing} component={PostSummary} />
+      </aside>
+      <section className="col-span-2">content</section>
     </main>
   );
 }
