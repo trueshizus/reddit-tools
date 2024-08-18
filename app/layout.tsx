@@ -21,12 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} border border-solid border-zinc-950 bg-zinc-950/5 max-h-lvh overflow-hidden flex`}
+        className={`${inter.className} border border-solid border-zinc-950 bg-zinc-950/10 max-h-lvh h-screen p-2 overflow-hidden flex`}
       >
-        <aside className="border border-solid bg-zinc-950/5 border-zinc-950 has-[:focus]:border-4 overflow-hidden basis-3/12 p-2">
+        <aside className="border border-solid bg-zinc-950/10 border-zinc-950 has-[:focus]:border-4 basis-3/12 p-2">
           {sidebar}
         </aside>
-        <main className="col-span-4 overflow-hidden border border-solid bg-zinc-950/5 border-zinc-950 basis-9/12">
+        <main className="col-span-4 overflow-hidden border border-solid bg-zinc-950/10 border-zinc-950 basis-9/12">
           {content}
         </main>
       </body>

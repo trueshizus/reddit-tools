@@ -20,7 +20,7 @@ export default function RadioLink({ id, name }: Props) {
       type="radio"
       name={name}
       value={id}
-      onChange={() => router.push(`/content/${id}`)}
+      // onChange={() => router.push(`/content/${id}`)}
       className="appearance-none  outline-none"
     />
   );
