@@ -15,8 +15,8 @@ export default async function Home() {
     .toArray();
 
   return (
-    <main className="bg-slate-500 grid grid-cols-3">
-      <aside className="flex flex-col gap-4 bg-slate-600 px-6 pt-4">
+    <main className="grid grid-cols-3 w-screen h-screen border border-solid bg-zinc-950/5 border-zinc-950 has-[:focus]:border-4">
+      <aside className="border border-solid bg-zinc-950/5 border-zinc-950 has-[:focus]:border-4 p-2 grid overflow-hidden">
         <Queue name="new" items={listing} component={PostSummary} />
       </aside>
       <section className="col-span-2">content</section>
