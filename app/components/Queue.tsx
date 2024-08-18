@@ -1,3 +1,5 @@
+import RadioLink from "./RadioLink";
+
 type Props = {
   name: string;
   items: Array<any>;
@@ -16,19 +18,10 @@ export default function Queue({ name, items, component }: Props) {
           <div key={item._id}>
             <label
               htmlFor={item._id}
-              className="grid grid-cols-12 gap-4 border border-solid bg-zinc-950/20 border-zinc-950 has-[:focus]:border-x-4 p-2"
-              className="grid grid-cols-12 gap-4 border border-solid border-zinc-950 has-[:focus]:bg-zinc-950/5 has-[:focus]:border-x-2 p-2"
+              className="border border-solid border-zinc-950 has-[:checked]:bg-zinc-950/5 has-[:checked]:border-l-8 p-2 flex flex-col"
             >
-              <input
-                key={item._id}
-                type="radio"
-                // className="appearance-none"
-                className="aspect-square accent-zinc-500 focus:accent-zinc-950 outline-none"
-                id={item._id}
-                name={name}
-                value={item._id}
-              />
-              <div className="col-span-11">{component({ ...item })}</div>
+              <RadioLink id={item._id} name={name} />
+              <div>{component({ ...item })}</div>
             </label>
           </div>
         ))}
