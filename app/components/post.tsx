@@ -1,45 +1,22 @@
-"use client";
-
-import { approvePost, removePost } from "../actions";
+import client from "@/lib/mongodb";
 
 type Props = {
-  post: any;
+  id: string;
 };
 
-export default function Post({ post }: Props) {
-  const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ): void => {
-    if (event.key === "a") {
-      approvePost(post.data.name);
-    }
+export default async function Post({ id }: Props) {
+  console.log(id);
+  const post = await client
+    .db("reddit-tools")
+    .collection("listings")
+    .find({ name: id })
+    .toArray();
 
-    if (event.key === "d") {
-      removePost(post.data.name);
-    }
-  };
-
+  console.log(post);
   return (
-    <label
-      key={post.data.id}
-      htmlFor={post.data.id}
-      className="block w-full max-w-lg  bg-white shadow-xl has-[:checked]:bg-indigo-50 has-[:checked]:border-indigo-500 has-[:checked]:border-4"
-    >
-      <div className="flex">
-        <input
-          type="radio"
-          name="listing-new"
-          className="appearance-none"
-          value={post.data.id}
-          onKeyDown={handleKeyDown}
-          id={post.data.id}
-        />
-        <div>
-          <h2 className="text-xl font-bold">{post.data.title}</h2>
-          <small>{post.data.author}</small>
-          <p>{post.data.selftext}</p>
-        </div>
-      </div>
-    </label>
+    <div>
+      <h1>Post</h1>
+      <p>Post id: {id}</p>
+    </div>
   );
 }

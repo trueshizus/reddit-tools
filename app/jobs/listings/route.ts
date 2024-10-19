@@ -14,21 +14,19 @@ export async function GET(request: NextRequest) {
     }
   }
   const database = client.db("reddit-tools");
-  const cronCollection = database.collection("jobs");
+  // const cronCollection = database.collection("jobs");
   const listingCollection = database.collection("listings");
 
   // get last cron doc and store after value
-  const lastCronDoc = await cronCollection
-    .find({})
-    .sort({ timestamp: -1 })
-    .limit(1)
-    .toArray();
+  // const lastCronDoc = await cronCollection
+  //   .find({})
+  //   .sort({ timestamp: -1 })
+  //   .limit(1)
+  //   .toArray();
 
-  const after = lastCronDoc.length ? lastCronDoc[0].after : null;
+  // const after = lastCronDoc.length ? lastCronDoc[0].after : null;
 
-  const response = await redditApiClient
-    .subreddit("argentina")
-    .listing("new", after);
+  const response = await redditApiClient.subreddit("argentina").listing("new");
 
   if (!response.data.children.length) {
     return new Response("No new posts", { status: 204 });
@@ -47,9 +45,9 @@ export async function GET(request: NextRequest) {
 
   await listingCollection.insertMany(listings);
 
-  const { insertedId } = await cronCollection.insertOne(cronDoc);
-  const createdCronDoc = await cronCollection.findOne({ _id: insertedId });
+  // const { insertedId } = await cronCollection.insertOne(cronDoc);
+  // const createdCronDoc = await cronCollection.findOne({ _id: insertedId });
 
   revalidatePath("/");
-  return Response.json(createdCronDoc);
+  return Response.json({ success: true, total: listings.length });
 }
