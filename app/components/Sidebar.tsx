@@ -1,6 +1,6 @@
 import client from "@/lib/mongodb";
-import Queue from "../components/Queue";
-import PostSummary from "../components/PostSummary";
+import Queue from "./Queue";
+import PostSummary from "./PostSummary";
 
 export default async function Sidebar() {
   const listing = await client
